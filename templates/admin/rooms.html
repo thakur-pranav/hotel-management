@@ -26,7 +26,7 @@
                 <input type="text" class="form-control" id="room_type" name="room_type" required>
             </div>
             <div class="mb-3">
-                <label for="price_per_night" class="form-label">Price per Night ($)</label>
+                <label for="price_per_night" class="form-label">Price per Night (INR)</label>
                 <input type="number" class="form-control" id="price_per_night" name="price_per_night" step="0.01" min="0" required>
             </div>
             <div class="mb-3">
@@ -63,7 +63,7 @@
         <tr>
             <td>{{ room.hotel_name }}</td>
             <td>{{ room.room_type }}</td>
-            <td>${{ "%.2f"|format(room.price_per_night) }}</td>
+            <td>INR {{ "%.2f"|format(room.price_per_night) }}</td>
             <td>{{ room.capacity }}</td>
             <td>{% if room.availability_status %}Available{% else %}Booked{% endif %}</td>
             <td>

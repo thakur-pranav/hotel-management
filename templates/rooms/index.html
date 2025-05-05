@@ -68,7 +68,7 @@
                 <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title">{{ room.room_type }} at {{ room.hotel_name }}</h5>
-                        <p class="card-text"><strong>Price:</strong> ${{ "%.2f"|format(room.price_per_night) }} per night</p>
+                        <p class="card-text"><strong>Price:</strong> INR {{ "%.2f"|format(room.price_per_night) }} per night</p>
                         <p class="card-text"><strong>Capacity:</strong> {{ room.capacity }} {% if room.capacity == 1 %}person{% else %}people{% endif %}</p>
                         <p class="card-text"><strong>Status:</strong> {% if request.args.get('check_in') and request.args.get('check_out') %}Available{% else %}Check Dates{% endif %}</p>
                         <a href="{{ url_for('book_room', room_id=room.room_id) }}" class="btn btn-success">Book Now</a>
