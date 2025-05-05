@@ -1,0 +1,85 @@
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+}
+
+.hotel-card {
+    transition: transform 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.hotel-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.hotel-image {
+    height: 200px;
+    object-fit: cover;
+}
+
+.star-rating {
+    color: #ffc107;
+}
+
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.review {
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.review-author {
+    font-weight: 500;
+}
+
+.review-date {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.dashboard-card {
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.dashboard-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+.booking-table th {
+    background-color: #f8f9fa;
+}
+
+.room-features {
+    list-style: none;
+    padding-left: 0;
+}
+
+.room-features li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 5px;
+}
+
+.room-features li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #28a745;
+}

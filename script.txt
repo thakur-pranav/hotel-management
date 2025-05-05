@@ -1,0 +1,5 @@
+python                                 //run on shell
+from werkzeug.security import generate_password_hash
+print(generate_password_hash("admin123"))
+
+copy the output and paste it in the sql table 

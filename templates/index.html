@@ -1,0 +1,42 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Home - Hotel Management System{% endblock %}
+
+{% block content %}
+<div class="jumbotron bg-light p-5 rounded">
+    <h1 class="display-4">Welcome to Hotel Management System</h1>
+    <p class="lead">Find and book the perfect accommodation for your next trip.</p>
+    <hr class="my-4">
+    <p>Browse our selection of top-rated hotels and enjoy a comfortable stay.</p>
+    <a class="btn btn-primary btn-lg" href="{{ url_for('hotels') }}" role="button">Browse Hotels</a>
+</div>
+
+<h2 class="mt-5">Featured Hotels</h2>
+<div class="row">
+    {% for hotel in hotels %}
+    <div class="col-md-4">
+        <div class="card hotel-card">
+            {% if hotel.image_path %}
+            <img src="{{ url_for('static', filename=hotel.image_path) }}" class="card-img-top hotel-image" alt="{{ hotel.hotel_name }}">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/default-hotel.jpg') }}" class="card-img-top hotel-image" alt="Default Image">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ hotel.hotel_name }}</h5>
+                <p class="card-text">{{ hotel.location }}</p>
+                <div class="mb-2 star-rating">
+                    {% for i in range(hotel.star_rating) %}
+                    <span>★</span>
+                    {% endfor %}
+                    {% for i in range(5 - hotel.star_rating) %}
+                    <span class="text-secondary">★</span>
+                    {% endfor %}
+                </div>
+                <a href="{{ url_for('hotel_detail', hotel_id=hotel.hotel_id) }}" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

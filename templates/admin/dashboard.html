@@ -1,0 +1,34 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - Hotel Management System{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Admin Dashboard</h1>
+
+<div class="admin-dashboard">
+    <div class="dashboard-card">
+        <div class="dashboard-number">{{ hotel_count }}</div>
+        <div class="dashboard-label">Total Hotels</div>
+    </div>
+    <div class="dashboard-card">
+        <div class="dashboard-number">{{ room_count }}</div>
+        <div class="dashboard-label">Available Rooms</div>
+    </div>
+    <div class="dashboard-card">
+        <div class="dashboard-number">{{ booking_count }}</div>
+        <div class="dashboard-label">Total Bookings</div>
+    </div>
+    <div class="dashboard-card">
+        <div class="dashboard-number">{{ user_count }}</div>
+        <div class="dashboard-label">Total Customers</div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a href="{{ url_for('admin_hotels') }}" class="btn btn-primary">Manage Hotels</a>
+</div>
+<div class="mt-2">
+    <a href="{{ url_for('admin_rooms') }}" class="btn btn-primary">Manage Rooms</a>
+</div>
+{% endblock %}

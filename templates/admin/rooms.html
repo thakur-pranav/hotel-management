@@ -1,0 +1,77 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Manage Rooms - Hotel Management System{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Manage Rooms</h1>
+
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Add New Room</h5>
+    </div>
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="hotel_id" class="form-label">Hotel</label>
+                <select class="form-select" id="hotel_id" name="hotel_id" required>
+                    <option value="">Select a hotel</option>
+                    {% for hotel in hotels %}
+                    <option value="{{ hotel.hotel_id }}">{{ hotel.hotel_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="room_type" class="form-label">Room Type</label>
+                <input type="text" class="form-control" id="room_type" name="room_type" required>
+            </div>
+            <div class="mb-3">
+                <label for="price_per_night" class="form-label">Price per Night ($)</label>
+                <input type="number" class="form-control" id="price_per_night" name="price_per_night" step="0.01" min="0" required>
+            </div>
+            <div class="mb-3">
+                <label for="capacity" class="form-label">Capacity (People)</label>
+                <input type="number" class="form-control" id="capacity" name="capacity" min="1" required>
+            </div>
+            <div class="mb-3">
+                <label for="features" class="form-label">Features (comma-separated)</label>
+                <input type="text" class="form-control" id="features" name="features" placeholder="Wi-Fi, TV, AC">
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Room Image</label>
+                <input type="file" class="form-control" id="image" name="image">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Room</button>
+        </form>
+    </div>
+</div>
+
+<h2>Existing Rooms</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Hotel</th>
+            <th>Room Type</th>
+            <th>Price</th>
+            <th>Capacity</th>
+            <th>Availability</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for room in rooms %}
+        <tr>
+            <td>{{ room.hotel_name }}</td>
+            <td>{{ room.room_type }}</td>
+            <td>${{ "%.2f"|format(room.price_per_night) }}</td>
+            <td>{{ room.capacity }}</td>
+            <td>{% if room.availability_status %}Available{% else %}Booked{% endif %}</td>
+            <td>
+                <a href="{{ url_for('admin_edit_room', room_id=room.room_id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{{ url_for('admin_delete_room', room_id=room.room_id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this room?')">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

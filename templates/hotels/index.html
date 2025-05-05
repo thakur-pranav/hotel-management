@@ -1,0 +1,41 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Hotels - Hotel Management System{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">All Hotels</h1>
+<div class="row">
+    {% for hotel in hotels %}
+    <div class="col-md-4">
+        <div class="card hotel-card">
+            {% if hotel.image_path %}
+            <img src="{{ url_for('static', filename=hotel.image_path) }}" class="card-img-top hotel-image" alt="{{ hotel.hotel_name }}">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/default-hotel.jpg') }}" class="card-img-top hotel-image" alt="Default Image">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ hotel.hotel_name }}</h5>
+                <p class="card-text">{{ hotel.location }}</p>
+                <div class="mb-2 star-rating">
+                    {% for i in range(hotel.star_rating) %}
+                    <span>★</span>
+                    {% endfor %}
+                    {% for i in range(5 - hotel.star_rating) %}
+                    <span class="text-secondary">★</span>
+                    {% endfor %}
+                </div>
+                <p class="card-text">
+                    {% if hotel.avg_rating %}
+                    <strong>Rating:</strong> {{ "%.1f"|format(hotel.avg_rating) }}/5
+                    {% else %}
+                    <strong>Rating:</strong> No ratings yet
+                    {% endif %}
+                </p>
+                <a href="{{ url_for('hotel_detail', hotel_id=hotel.hotel_id) }}" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

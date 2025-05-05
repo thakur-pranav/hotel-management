@@ -1,0 +1,78 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Manage Hotels - Hotel Management System{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Manage Hotels</h1>
+
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Add New Hotel</h5>
+    </div>
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="hotel_name" class="form-label">Hotel Name</label>
+                <input type="text" class="form-control" id="hotel_name" name="hotel_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" name="location" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="star_rating" class="form-label">Star Rating</label>
+                <select class="form-select" id="star_rating" name="star_rating" required>
+                    <option value="1">1 Star</option>
+                    <option value="2">2 Stars</option>
+                    <option value="3">3 Stars</option>
+                    <option value="4">4 Stars</option>
+                    <option value="5">5 Stars</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="contact_info" class="form-label">Contact Info</label>
+                <input type="text" class="form-control" id="contact_info" name="contact_info">
+            </div>
+            <div class="mb-3">
+                <label for="amenities" class="form-label">Amenities (comma-separated)</label>
+                <input type="text" class="form-control" id="amenities" name="amenities" placeholder="Wi-Fi, Parking, Pool">
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Hotel Image</label>
+                <input type="file" class="form-control" id="image" name="image">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Hotel</button>
+        </form>
+    </div>
+</div>
+
+<h2>Existing Hotels</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Star Rating</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for hotel in hotels %}
+        <tr>
+            <td>{{ hotel.hotel_name }}</td>
+            <td>{{ hotel.location }}</td>
+            <td>{{ hotel.star_rating }} Stars</td>
+            <td>
+                <a href="#" class="btn btn-sm btn-warning">Edit</a>
+                <a href="#" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

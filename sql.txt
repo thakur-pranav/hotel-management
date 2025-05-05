@@ -1,0 +1,77 @@
+CREATE DATABASE hotel_management;
+USE hotel_management;
+
+-- Users Table
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    phone_number VARCHAR(20),
+    user_type ENUM('Customer', 'Admin') DEFAULT 'Customer',
+    registration_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Hotels Table
+CREATE TABLE hotels (
+    hotel_id INT AUTO_INCREMENT PRIMARY KEY,
+    hotel_name VARCHAR(100) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    description TEXT,
+    star_rating INT CHECK (star_rating BETWEEN 1 AND 5),
+    image_path VARCHAR(255),
+    contact_info VARCHAR(255),
+    amenities TEXT
+);
+
+-- Rooms Table
+CREATE TABLE rooms (
+    room_id INT AUTO_INCREMENT PRIMARY KEY,
+    hotel_id INT NOT NULL,
+    room_type VARCHAR(50) NOT NULL,
+    price_per_night DECIMAL(10, 2) NOT NULL,
+    capacity INT NOT NULL,
+    features TEXT,
+    image_path VARCHAR(255),
+    --availability_status BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id) ON DELETE CASCADE
+);
+
+-- Bookings Table
+CREATE TABLE bookings (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    room_id INT NOT NULL,
+    check_in_date DATE NOT NULL,
+    check_out_date DATE NOT NULL,
+    number_of_guests INT NOT NULL,
+    booking_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    status ENUM('Confirmed', 'Cancelled') DEFAULT 'Confirmed',
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (room_id) REFERENCES rooms(room_id) ON DELETE CASCADE
+);
+
+-- Payments Table
+CREATE TABLE payments (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    booking_id INT NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    payment_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    payment_method VARCHAR(50) NOT NULL,
+    transaction_id VARCHAR(100),
+    status ENUM('Pending', 'Completed', 'Failed') DEFAULT 'Pending',
+    FOREIGN KEY (booking_id) REFERENCES bookings(booking_id) ON DELETE CASCADE
+);
+
+-- Reviews Table
+CREATE TABLE reviews (
+    review_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    hotel_id INT NOT NULL,
+    rating INT CHECK (rating BETWEEN 1 AND 5),
+    comment TEXT,
+    review_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id) ON DELETE CASCADE
+);

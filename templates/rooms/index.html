@@ -1,0 +1,86 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Rooms - Hotel Management System{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Available Rooms</h1>
+
+<div class="card mb-4">
+    <div class="card-header bg-light">
+        <h5 class="mb-0">Filter Rooms</h5>
+    </div>
+    <div class="card-body">
+        <form method="GET" action="{{ url_for('rooms') }}">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="hotel_id" class="form-label">Hotel</label>
+                        <select class="form-select" id="hotel_id" name="hotel_id">
+                            <option value="">All Hotels</option>
+                            {% for hotel in hotels %}
+                            <option value="{{ hotel.hotel_id }}" {% if request.args.get('hotel_id') == hotel.hotel_id|string %}selected{% endif %}>{{ hotel.hotel_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="room_type" class="form-label">Room Type</label>
+                        <select class="form-select" id="room_type" name="room_type">
+                            <option value="">All Types</option>
+                            <option value="Standard" {% if request.args.get('room_type') == 'Standard' %}selected{% endif %}>Standard</option>
+                            <option value="Deluxe" {% if request.args.get('room_type') == 'Deluxe' %}selected{% endif %}>Deluxe</option>
+                            <option value="Suite" {% if request.args.get('room_type') == 'Suite' %}selected{% endif %}>Suite</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="check_in" class="form-label">Check-in Date</label>
+                        <input type="date" class="form-control" id="check_in" name="check_in" value="{{ request.args.get('check_in', '') }}">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="check_out" class="form-label">Check-out Date</label>
+                        <input type="date" class="form-control" id="check_out" name="check_out" value="{{ request.args.get('check_out', '') }}">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    {% for room in rooms %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    {% if room.image_path %}
+                    <img src="{{ url_for('static', filename=room.image_path) }}" class="img-fluid rounded-start h-100" alt="{{ room.room_type }}">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='images/default-room.jpg') }}" class="img-fluid rounded-start h-100" alt="Default Room">
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ room.room_type }} at {{ room.hotel_name }}</h5>
+                        <p class="card-text"><strong>Price:</strong> ${{ "%.2f"|format(room.price_per_night) }} per night</p>
+                        <p class="card-text"><strong>Capacity:</strong> {{ room.capacity }} {% if room.capacity == 1 %}person{% else %}people{% endif %}</p>
+                        <p class="card-text"><strong>Status:</strong> {% if request.args.get('check_in') and request.args.get('check_out') %}Available{% else %}Check Dates{% endif %}</p>
+                        <a href="{{ url_for('book_room', room_id=room.room_id) }}" class="btn btn-success">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if not rooms %}
+<p>No rooms match your criteria.</p>
+{% endif %}
+{% endblock %}

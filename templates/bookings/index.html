@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}My Bookings - Hotel Management System{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">My Bookings</h1>
+
+{% if bookings %}
+<table class="table booking-table">
+    <thead>
+        <tr>
+            <th>Hotel</th>
+            <th>Room Type</th>
+            <th>Check-in</th>
+            <th>Check-out</th>
+            <th>Guests</th>
+            <th>Total Amount</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.hotel_name }}</td>
+            <td>{{ booking.room_type }}</td>
+            <td>{{ booking.check_in_date }}</td>
+            <td>{{ booking.check_out_date }}</td>
+            <td>{{ booking.number_of_guests }}</td>
+            <td>${{ "%.2f"|format(booking.total_amount) }}</td>
+            <td>{{ booking.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No bookings found.</p>
+{% endif %}
+{% endblock %}
