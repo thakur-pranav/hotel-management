@@ -63,7 +63,7 @@
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title"><i class="fas fa-bed me-2"></i>{{ room.room_type }}</h5>
-                            <p class="card-text"><i class="fas fa-dollar-sign me-2"></i><strong>Price:</strong> ${{ "%.2f"|format(room.price_per_night) }} per night</p>
+                            <p class="card-text"><i class="fas fa-dollar-sign me-2"></i><strong>Price:</strong> INR {{ "%.2f"|format(room.price_per_night) }} per night</p>
                             <p class="card-text"><i class="fas fa-users me-2"></i><strong>Capacity:</strong> {{ room.capacity }} {% if room.capacity == 1 %}person{% else %}people{% endif %}</p>
                             <p class="card-text"><i class="fas fa-list-ul me-2"></i><strong>Features:</strong> {{ room.features }}</p>
                             <p class="card-text">
