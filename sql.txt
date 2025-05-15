@@ -75,3 +75,6 @@ CREATE TABLE reviews (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id) ON DELETE CASCADE
 );
+-- Create an admin user (password: admin123)
+INSERT INTO users (username, password, email, user_type) 
+VALUES ('admin', '$2b$12$1xxxxxxxxxxxxxxxxxxxxuZLbwxnpY0o58unSvIPxddLxGystU.', 'admin@example.com', 'Admin');
